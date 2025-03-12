@@ -5,8 +5,10 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                 image:18-alpine
-            }
+                  image:18-alpine
+                } 
+
+            }    
 
             steps {
                 sh '''
