@@ -52,12 +52,16 @@ pipeline {
                     npm install -g serve
                     serve -s build
                     npx playwright test
-                '''
-            }
-        }
+
+                '''    
+
+            }       
+                
+        }        
+    }    
     post {
         always {
             junit 'test-results/junit.xml'
         }           
     }
-}   
+}    
