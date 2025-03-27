@@ -1,16 +1,11 @@
 pipeline {
     agent any
-    environment {
-        IMAGE_NAME = "nginx-custom"
-        
-    }
+    
     stages {
-        stage('Build NGINX Docker Image') {
+        stage('Run NGINX Container') {
             steps {
-                script {
-                    sh "docker build -t ${IMAGE_NAME}:latest ."
-                }
+                sh 'docker run -d -p 8080:80 --name nginx-container nginx:latest'  // Use official NGINX image
             }
         }
-    }    
-}   
+    }
+}
