@@ -5,7 +5,10 @@ pipeline {
         stage('Run and Test NGINX Container') {
             steps {
                 script {
-                    // Run NGINX container
+                    // Clean up any existing container with the same name
+                    sh 'docker ps -q --filter "name=bharat2h" | xargs -r docker rm -f'
+                    
+                    // Run the NGINX container
                     sh 'docker run -d -p 8081:80 --name bharat2h nginx'
                     
                     // Replace <host-ip> with the actual IP address of the machine running Jenkins
