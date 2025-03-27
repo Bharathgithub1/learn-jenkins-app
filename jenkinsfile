@@ -11,8 +11,8 @@ pipeline {
                     // Run the NGINX container
                     sh 'docker run -d -p 8081:80 --name bharat2h nginx'
                     
-                    // Replace <host-ip> with the actual IP address of the machine running Jenkins
-                    def hostIp = '<host-ip>'  // Update this with your host IP address
+                    // Use the actual local IP address
+                    def hostIp = '172.28.0.170'  // Replace this with your actual local IP address
                     
                     // Test if the NGINX container is accessible
                     sh "curl -I http://${hostIp}:8081/"
