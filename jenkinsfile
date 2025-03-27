@@ -1,11 +1,15 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Run NGINX Container') {
-            steps {
-                sh 'docker run -d -p 8080:80 --name nginx-container nginx:latest'  // Use official NGINX image
+        stage('Build') {
+            agent {
+                docker {
+                    image 'gradle:8.2.0-jdk17-alpine'
+                    // Run the container on the node specified at the
+                    // top-level of the Pipeline, in the same workspace,
+                    // rather than on a new node entirely:
+                    reuseNode true
+                }
             }
-        }
-    }
-}
+            steps {
+                sh 'gradle --version'
