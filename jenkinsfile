@@ -1,26 +1,14 @@
 pipeline {
     agent any
-
+    environment {
+        IMAGE_NAME = "nginx-custom"
+        
+    }
     stages {
-        stage('build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                }
-            }        
-            
+        stage('Build NGINX Docker Image') {
             steps {
-                sh '''
-
-                npm --version
-                node --version
-                npm ci
-                npm run build
-
-                '''
-
-                
+                script {
+                    sh "docker build -t ${IMAGE_NAME}:latest ."
+                }
             }
         }
-    }
-}
