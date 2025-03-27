@@ -4,19 +4,19 @@ pipeline {
     stages {
         stage('Run NGINX Container') {
             steps {
-                sh 'docker run -d -p 8080:80 --name bharath nginx'  // Run the official NGINX container with custom name 'bharath'
+                sh 'docker run -d -p 8081:80 --name bharat2h nginx'  // Run the official NGINX container with custom name 'bharath'
             }
         }
 
         stage('Test Container') {
             steps {
-                sh 'curl -I http://localhost:8080'  // Test if NGINX is running
+                sh 'curl -I http://localhost:8081/'  // Test if NGINX is running
             }
         }
 
         stage('Cleanup') {
             steps {
-                sh 'docker ps -q --filter "name=bharath" | xargs -r docker stop && docker rm bharath'  // Cleanup the container
+                sh 'docker ps -q --filter "name=bharat2h" | xargs -r docker stop && docker rm bharath'  // Cleanup the container
             }
         }
     }
