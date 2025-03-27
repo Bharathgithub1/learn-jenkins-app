@@ -1,17 +1,22 @@
 pipeline {
     agent any
-    
+
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'gradle:8.2.0-jdk17-alpine'
-                    // Reuse the workspace node
-                    reuseNode true
-                }
-            }
+        stage('Run NGINX Container') {
             steps {
-                sh 'gradle --version'  // Run Gradle version command
+                sh 'docker run -d -p 8080:80 --name bharath nginx'  // Run the official NGINX container with custom name 'bharath'
+            }
+        }
+
+        stage('Test Container') {
+            steps {
+                sh 'curl -I http://localhost:8080'  // Test if NGINX is running
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                sh 'docker ps -q --filter "name=bharath" | xargs -r docker stop && docker rm bharath'  // Cleanup the container
             }
         }
     }
