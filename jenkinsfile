@@ -15,7 +15,7 @@ pipeline {
                         sh '''
                            
                            npm test
-                           #test -f index.html
+                          
                            
 
                         '''
