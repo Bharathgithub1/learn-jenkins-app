@@ -14,7 +14,7 @@ pipeline {
                     steps {
                         sh '''
                             npm --version
-                            node --veriosn
+                            node --version
                             npm ci
                             npm install
                             npm test
