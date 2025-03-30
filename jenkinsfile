@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Run Tests') {
             parallel {
-                stage('unit Tests') {
+                stage('Build') {
                     agent {
                         docker {
                             image 'node:18-alpine'
@@ -13,6 +13,10 @@ pipeline {
                     }
                     steps {
                         sh '''
+                            npm --version
+                            node --veriosn
+                            npm ci
+                            npm install
                             npm test
                             test -f build/index.html
                         '''
