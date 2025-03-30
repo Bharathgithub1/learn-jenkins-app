@@ -48,4 +48,9 @@ pipeline {
             }
         }
     }
-}
+     post {
+        always {
+            dunit 'dest-results/dunit.xml'
+        }    
+    }
+}    
