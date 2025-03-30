@@ -50,7 +50,7 @@ pipeline {
     }
      post {
         always {
-            dunit 'dest-results/dunit.xml'
+            junit 'dest-results/junit.xml'
         }    
     }
 }    
