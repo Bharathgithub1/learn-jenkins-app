@@ -13,15 +13,14 @@ pipeline {
                     }
                     steps {
                         sh '''
-                            rm -rf node_modules
-                            rm -rf package-lock.json
-                            chown -R $(id -u):$(id -g) /var/jenkins_home/workspace/pipeline1
+                           
                             npm ci
                             npm install
                             npm --version
                             node --version
                             npm test
                             test -f index.html
+                            
                         '''
                     }
                 }
