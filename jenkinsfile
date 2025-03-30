@@ -1,16 +1,10 @@
-
-
-
-
-
-
 pipeline {
     agent any
 
     stages {
         stage('Run Tests') {
             parallel {
-                stage('Run Tests') {
+                stage('Build') {
                     agent {
                         docker {
                             image 'node:18-alpine'
@@ -19,23 +13,19 @@ pipeline {
                     }
                     steps {
                         sh '''
-                           
+                            rm -rf node_modules
+                            rm -rf package-lock.json
+                            chown -R $(id -u):$(id -g) /var/jenkins_home/workspace/pipeline1
+                            npm ci
+                            npm install
+                            npm --version
+                            node --version
                             npm test
-                            test -f build/index.html
-
-                            '''
-                        }     
+                            test -f index.html
+                        '''
                     }
-                    post {
-                        always {
-                            junit 'jest-results/junit.xml'
-
-                               
-
-                        }         
-                    }            
                 }
-            
+
                 stage('e2e') {
                     agent {
                         docker {
@@ -49,20 +39,17 @@ pipeline {
                             node_modules/.bin/serve -s build &
                             sleep 10
                             npx playwright test --reporter=html
-                            '''
-                        }    
+                        '''
                     }
-                    post {
-                        always {
-                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-                
-                
-                        }
-                    }
-                }            
-            
+                }
             }
+        }
+    }
 
+    post {
+        always {
+            junit 'jest-results/junit.xml'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
