@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    stages("run tests")
+    stages("run tests") {
         parallel {
            stage('Build') {
              agent {
