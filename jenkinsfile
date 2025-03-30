@@ -14,8 +14,9 @@ pipeline {
                     steps {
                         sh '''
                            
-                           #test -f index.html
                            npm test
+                           #test -f index.html
+                           
 
                         '''
                     }
