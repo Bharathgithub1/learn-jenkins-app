@@ -10,18 +10,19 @@ pipeline {
                       reuseNode true
                     }  
                 }
-            }
-            steps {
-                sh '''
-                    ls -la
-                    npm ci
-                    npm run build
-                    npm test
-                    test -f build/index.html
-                    npm --version
-                    node --version
-                    ls -la
-                    '''
+            
+                steps {
+                   sh '''
+                     npm ci 
+                     npm install
+                     npm --version
+                     node --version
+                     npm test
+                     test -f index.html
+                     '''
+                
+                    }
+                    
                 }    
             }
         
@@ -33,19 +34,21 @@ pipeline {
                     
                     }   
                 }
-            }
-            steps {
-                sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    sleep 10
-                    npx playwright test --reporter=html
-                    '''
+            
+                steps {
+                  sh '''
+                      npm install serve
+                      node_modules/.bin/serve -s build &
+                      sleep 10
+                      npx playwright test --reporter=html
+                      '''
+                    }
+                    
                 }   
             }
         }
     }
-    
+
     post {
         always {
             junit 'jest-results/junit.xml'
