@@ -1,3 +1,4 @@
+/*
 pipeline {
     agent any
 
@@ -19,6 +20,29 @@ pipeline {
                     npm --version
                     node --version
                     ls -la
+                '''
+            }
+        }
+    }
+}
+*/
+
+pipeline {
+    agent any
+
+    stages {
+        stage('e2e') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.39.0-noble'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install -g serve
+                    serve s build
+                    npx playwright test
                 '''
             }
         }
