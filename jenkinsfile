@@ -19,8 +19,9 @@ pipeline {
                     }
                     steps {
                         sh '''
-                            npm ci
+                            
                             npm test
+                            
                         '''
                     }
                     post {
