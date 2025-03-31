@@ -15,12 +15,12 @@ pipeline {
                         sh '''
                            
                            
-                           npm test
+                         npm test
 
-                          
+                         '''
                            
 
-                        '''
+                        }    
                     }
                 }
 
