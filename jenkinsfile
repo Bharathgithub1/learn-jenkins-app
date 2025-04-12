@@ -95,20 +95,19 @@ pipeline {
                 '''
             }
     
-        }   
-    }   
-
-    stage('prod E2E') {
-        agent {
-            docker {
-                image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                reuseNode true
+        }
+        stage('prod E2E') {
+           agent {
+                docker {
+                   image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                   reuseNode true
+                }   
             }
         }
         
         environment {
             
-           CI_ENVIRONMENT_URL = 'https://eloquent-narwhal-edbd8f.netlify.app'
+          CI_ENVIRONMENT_URL = 'https://eloquent-narwhal-edbd8f.netlify.app'
 
 
         }
@@ -128,4 +127,4 @@ pipeline {
         }
     }
 }
-                                               
+                                                
